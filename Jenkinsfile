@@ -1,14 +1,15 @@
 pipeline {
     agent {
         docker {
-            image 'node:18-alpine' // ใช้ Image นี้ที่มี Node.js มาให้แล้ว
+            image 'node:18-alpine'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
+
     stages {
-        stage('Test npm') {
+        stage('Install') {
             steps {
-                sh 'npm --version'
-                sh 'node --version'
+                sh 'npm install'
             }
         }
     }
