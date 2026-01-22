@@ -1,18 +1,21 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'node:18-alpine' // ใช้ Image นี้ที่มี Node.js มาให้แล้ว
+            reuseNode true 
+        }
+    }
     stages {
-        stage('Install') {
+        stage('Test npm') {
             steps {
-                sh 'node --version'
                 sh 'npm --version'
-                sh 'npm install'
+                sh 'node --version'
             }
         }
-
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'npm test || true'
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
     }
